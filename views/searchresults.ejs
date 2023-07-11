@@ -1,0 +1,111 @@
+<%- include("partials/header") -%>
+
+<div id="result-page">
+
+
+    <h3 style=" color: rgb(83, 83, 83);">Found <%= items.length %> results for: "<%= search %>" </h3>
+
+    <br>
+
+    <% if (items.length === 0 ) { %>
+        <div style="text-align: center;">
+        <h4 style="color: rgba(0, 0, 0, 0.795);">No related results... </h4>
+        <button class="btn btn-warning"><a href="/home/#search-form" style="text-decoration: none; color: black;">Go Back</a></button>
+        </div>
+
+
+    <% } else { %>
+
+        <div id="result-card">
+            <div style="padding: 0 0 15px 15px; color: rgb(145, 145, 145);">
+            <p>Search Items</p>
+            </div>
+
+        <% for( let i = 0; i < no ; i++ ) { %>
+        
+
+            <table id="result-item">
+                <tbody>
+
+                    <%  function financial(x, num) { %>
+                        <%  return ('$'+Number.parseFloat(x).toFixed(num)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); %>
+                        <% } %>
+
+                    <tr data-href="/datapage/<%= items[i].id %>">
+                        <td id="result-symbol"><a href="/datapage/<%= items[i].id %>"><img src="https://assets.coincap.io/assets/icons/<%= (items[i].symbol).toLowerCase() %>@2x.png" alt="" onerror="this.src='https://www.shutterstock.com/image-vector/mountain-vector-icon-isolated-on-260nw-1199231911.jpg';" style="width: 50px;"></td>
+                        <td><span style="font-size: 20px; color: rgb(83, 83, 83);"><%= items[i].name %> (<%= items[i].symbol %>)</span>
+                            <br>
+
+                            <p style="font-size: 15px; color: rgba(0, 0, 0, 0.5);">Price 
+
+                                <% if (items[i].priceUsd > 0.001) { %>
+                                    <%=financial(items[i].priceUsd, 3)%>
+                                <% } %>
+
+                                <% if (items[i].priceUsd < 0.001) { %>
+                                    <%= ('$'+Number.parseFloat(items[i].priceUsd).toFixed(6)).toString() %>
+                                <% } %>
+
+                                <% if (items[i].priceUsd < 0.000001) { %>
+                                    <%= ('$'+Number.parseFloat(items[i].priceUsd).toFixed(9)).toString() %>
+                                <% } %>
+
+
+                            </p>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        <% } %>
+
+
+
+    
+
+        <% if (items.length < 6) { %>
+
+         <!-- Remove see more button -->
+
+        <% } else { %>
+            <div id="show-all">
+                <form action="/searchresults" method="post">
+                <button id="showMore" type="submit" > See All</button>
+                </form>
+            </div>
+
+        <% } %>
+
+        </div>
+
+    <% } %>
+
+
+</div>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+    const rows = document.querySelectorAll("tr[data-href]");
+    
+    
+    rows.forEach(row => {
+        row.addEventListener("click", () => {
+            window.location.href = row.dataset.href;
+        })
+    })
+});
+
+
+const array = document.querySelectorAll("tr").length;
+
+if (array > 5) {
+    const showAll = document.getElementById("show-all");
+    showAll.remove();
+}
+
+</script>
+
+
+
+<%- include("partials/footer") -%>

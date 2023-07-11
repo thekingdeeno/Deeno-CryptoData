@@ -1,0 +1,396 @@
+<%- include("partials/header") -%>
+
+
+
+<!-- FORM LAYOUT ONE (Incase of a major bug in future update) -->
+
+<!-- <style>
+
+    #converter{
+        margin: 0;
+    }
+
+    #container{
+        background-color: #ffeeb5;
+        padding: 80px 100px 100px 100px;
+        margin: auto;
+    }
+
+    form{
+        padding: 20px;
+    }
+
+    #header{
+        /* background-color: #024049; */
+        padding: 50px 0 50px 50px;
+    }
+
+    #header h1{
+    background-color: #02343b;
+    color: #AFF8C8;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    width: max-content;
+    margin: auto;
+    /* border-bottom: 5px solid #c7ba8f;
+    border-right: 5px solid #c7ba8f; */
+    box-shadow: 10px 10px 4px #01262c;
+    }
+
+    input, select{
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
+
+    form button{
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
+
+    #submit-button{
+    padding: 25px 0 0 5px;
+    }
+
+    #answer{
+      color: #02343b;
+      padding: 50px 0 0 15px;
+    }
+
+    #answer a{
+      text-decoration: none;
+      color: #157347;
+      font-weight: 400;
+    }
+
+    #answer a:hover{
+      color:#1cb46d;
+      font-weight: 600;
+      transition: 400ms;
+    }
+
+    #quote{ 
+        background-color: #02343b;
+        color: #ffffffce;
+        border-radius: 15px;
+        box-shadow: rgba(0, 0, 0, 0.39) 0px 54px 55px, rgba(0, 0, 0, 0.425) 0px -12px 30px, rgba(0, 0, 0, 0.534) 0px 4px 6px, rgba(0, 0, 0, 0.404) 0px 12px 13px, rgba(0, 0, 0, 0.233) 0px -3px 5px;
+        height: max-content;
+    }
+
+    #cta h1{
+      color: black;
+    }
+</style> -->
+
+<!-- <div class="row" id="container">
+
+
+    <div id="converter" class="col">
+
+    <form action="/conversion" method="post" class="row g-3">
+
+      <div class="row g-2">
+
+        <div class="col-md">
+          <div class="">
+              <label for="inputCrypto" class="form-label"></label>
+              <input name="crypto" type="text" class="form-control" id="inputCrypto" placeholder="Crypto" autocomplete="off">
+          </div>
+        </div>
+
+      <div class="col-lg-6">
+        <label for="inputFiat" class="form-label"></label>
+        <select class="form-select"  id="autoSizingSelect"  name="fiat">
+          <option selected>Currency List</option>
+          < % for( let i = 0; i < option.length; i++ ) { %>
+            <option > %= option[i] %></option>
+          < % } %>
+        </select>
+      </div>
+      </div>
+
+      <div class="row g-2">
+        <div class="col-md">
+          <div class="">
+              <label for="inputAmount" class="form-label"></label>
+              <input name="amount" type="number" step="any" class="form-control" id="inputAmount" placeholder="Amount" autocomplete="off">
+          </div>
+        </div>
+
+      <div class="col-md" id="submit-button">
+        <button type="submit" class="btn btn-success">Convert</button>
+      </div>
+      </div>
+
+
+    </form>
+
+    <div id="answer">
+      < % if (symOne === "") { %>
+        <p style="width: 80%; padding-left: 15px;">NOTE:
+          <br> You can only convert from crypto to a federal currency</p>
+       < % } else { %>
+
+        <h5>< %= valueOne %> <a href="/datapage/< %= nameOne.toLowerCase() %>">< %= nameOne %></a> (< %= symOne %>) equals</h5>
+        <h1>< %= valueTwo %> <%= symTwo %></h1>
+        <p>< %= todaysDate %></p>
+       < % } %>
+    </div>
+
+    </div>
+
+    
+
+
+    <div class="col" id="quote" style="padding: 50px;">
+      <h3 style="text-align: center;">Word Of The Day</h3>
+      <hr>
+      <h2 id="text" style="font-size: 25px;">< %= randomQuote.text %></h2>
+      <br>
+      <h5 id="author"> < %= randomQuote.author %></h5>
+    </div>
+
+</div> -->
+
+
+
+
+
+
+
+
+<!-- FORM LAYOUT TWO  -->
+
+<style>
+  #conv-page{
+    background-color: #ffeeb5;
+    padding: 80px 0 50px 50px;
+  }
+
+  #conv-header{
+    text-align: center;
+    padding: 0 20px 0 20px;
+  }
+
+  #converter{
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px 46px;
+    width: 80%;
+    margin: auto;
+    box-shadow: rgba(0, 0, 0, 0.089) 0px 54px 55px, rgba(0, 0, 0, 0.082) 0px -12px 30px, rgba(0, 0, 0, 0.075) 0px 4px 6px, rgba(0, 0, 0, 0.096) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  }
+
+  #conv-title{
+    text-align: center;
+    color: #008da3;
+    padding: 0 0 20px 0;
+  }
+
+  #conv-title h5{
+    font-size: 15px;
+  }
+
+  #conv-inputs{
+    padding: 10px 0 30px 0;
+  }
+
+  #conv-inputs h5{
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  #conv-button{
+    text-align: right;
+  }
+
+  #answer{
+    /* background-color: #008da3;
+    padding: 0 0 0 50px; */
+  }
+
+  #conv-footer-left h5{
+    font-weight: 200;
+  }
+
+  #conv-footer-left a{
+    text-decoration: none;
+    color: #0e8add;
+    /* font-weight: 400; */
+  }
+  
+
+  #conv-footer-left a:hover{
+    color: #2a8eb6;
+    font-weight: 300;
+    transition: 300ms;
+  }
+
+  #info{
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.493);
+  }
+  #info p{
+    background-color: #0b5dd70c;
+    padding: 8px;
+  }
+
+  #conv-cta{
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    padding: 100px 0 0px 0;
+  }
+
+  #conv-cta h1{
+    font-size: 30px;
+    font-weight: 700;
+    color:  #014751;
+  }
+
+  #conv-cta p{
+    font-size: 20px;
+    font-weight: 600;
+    color:  #014751;
+    padding: 0 10px 0 0;
+  }
+
+</style>
+
+<div id="conv-page">
+
+
+  <div id="conv-header">
+    <!-- <h1>Trusted Global Currency Converter & Money Transfer Solutions</h1> -->
+    <!-- <p>Best source for currency conversion, sending money online and tracking exchange rates</p> -->
+  </div>
+
+
+  <div id="converter">
+
+    <div id="conv-title">
+      <h5><i class="fa-solid fa-coins"></i> Conversion</h3>
+    </div>
+
+    <form action="/conversion" method="post" id="conv-form">
+
+      <div id="conv-inputs" class="row row-cols-lg-auto g-3 align-items-center">
+      <div class="col-lg-4">
+        <div><h5>Amount</h5></div>
+        <input name="amount" type="number" step="any" class="form-control" id="inputAmount" placeholder="#" autocomplete="off" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
+      </div>
+    
+
+      <!-- <div class="col-lg-4">
+        <div><h5>From</h5></div>
+        <input name="crypto" type="text" class="form-control" id="inputCrypto" placeholder="Crypto" autocomplete="off">
+      </div> -->
+
+      <div class="col-lg-4">
+        <div><h5>From</h5></div>
+        <select class="form-select"  id="autoSizingSelect" id="crypto"  name="crypto" required style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
+          <option selected disabled value="">Crypto</option>
+          <% for( let i = 0; i < crypto.length; i++ ) { %>
+            <option ><%= crypto[i].symbol %></option>
+          <% } %>
+        </select>
+      </div>
+    
+      <div class="col-lg-4">
+        <div><h5>To</h5></div>
+        <select class="form-select"  id="autoSizingSelect"  name="fiat" required style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
+          <option selected disabled value="">Currency</option>
+          <% for( let i = 0; i < option.length; i++ ) { %>
+            <option ><%= option[i] %></option>
+          <% } %>
+        </select>
+      </div>
+      </div>
+
+
+
+
+      <div class="row" id="conv-footer">
+        <div class="col-lg-6" id="conv-footer-left">
+
+          <div id="">
+            <% if (symOne === "") { %>
+      
+             <% } else { %>
+              <h5 style="padding-left: 20px;"><%= valueOne %> <a href="/datapage/<%= nameOne.toLowerCase() %>"><%= nameOne %>(<%= symOne %>)</a> equals</h5>
+              <h1 style="padding-left: 20px;"><%= valueTwo %> <%= symTwo %></h1>
+              <p style="padding-left: 20px;"><%= todaysDate %></p>
+             <% } %>
+          </div>
+
+          <div id="info">
+            <p>We use the mid-market rate for our Converter. This is for informational purposes only. Note that you can only change from crypto to a federal currency for now.</p>
+          </div>
+          
+        </div>
+
+          <div class="col-lg-6" id="conv-button">
+            <button type="submit" class="btn btn-success" onclick="isComplete()">Convert</button>
+          </div>
+      </div>
+
+    </form>
+
+  </div>
+
+<div id="conv-cta">
+  <h1>Trusted Digital Currency Converter & Information Provider</h1>
+  <p>Best source for currency conversion and tracking exchange rates online</p>
+</div>
+<div id="search-form" class="" style="background-color: #00000000; padding-top: 8px;">
+  <div class="" id="search-bar">
+      <form action="/home" method="post" class="d-flex " id="form" role="search">
+          <input name="search" class="form-control me-2" id="search-input" size="4" type="search" placeholder="Search" aria-label="Search" autocomplete="off">
+          <br>
+          <button class="btn btn-dark" type="submit" onclick="empty()">Go</button>
+      </form>
+  </div>
+</div>
+
+</div>
+
+<script>
+        let amount = document.getElementById("inputAmount");
+        const convForm = document.getElementById("conv-form");
+
+        // if (amount.value === "") {
+        //   convForm.setAttribute("onsubmit", "return false;");
+        // };
+
+        function isComplete(){
+          if (amount.value == "") {
+            convForm.setAttribute("onsubmit", "return false;");
+            alert("You didn't give an amount to convert")
+          } else {
+            convForm.setAttribute("onsubmit", "return true;");
+          };
+        }
+
+//   for Search field 
+
+        function empty(){
+        let input = document.getElementById("search-input");
+        const form = document.getElementById("form");
+
+        let text = (input.value).trim();
+
+
+        if (text === "") {
+          form.setAttribute("onsubmit", "return false;" );
+          alert("Please type something...");
+        } else {
+          form.setAttribute("onsubmit", "return true;" );
+        };
+
+        input.value = text.replaceAll(" ", "");
+
+      };
+</script>
+
+<%- include("partials/footer") -%>

@@ -1,0 +1,97 @@
+<%- include("partials/header") -%>
+
+<div id="data-page">
+  <div id="dp-header">
+    <a href="<%= cryptoWebpage %>" target="_blank"><h1 style="text-transform: uppercase;"><img src="https://assets.coincap.io/assets/icons/<%= cryptoLogo %>@2x.png" alt="" style="width: 60px;"> <%= cryptoName %> </h1></a>
+  </div>
+  
+  <div id="table-section">
+      <table class="table table-hover table-dark table-striped-columns">
+          <thead>
+            <tr class="table-active">
+              <th scope="col">Object</th>
+              <th scope="col">Value</th>
+            </tr>
+          </thead>
+
+          <%  function financial(x, num) { %>
+          <%  return (Number.parseFloat(x).toFixed(num)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); %>
+          <% } %>
+  
+          <tbody>
+            <tr>
+              <td>ID</td>
+              <td class="data"><%=cryptoData.id%></td>
+            </tr>
+            <tr>
+              <td>Rank</td>
+              <td class="data"># <%=cryptoData.rank%></td>
+            </tr>
+            <tr>
+              <td>Symbol</td>
+              <td class="data"><%=cryptoData.symbol%></td>
+            </tr>
+            <tr>
+              <td>Name</td>
+              <td class="data"><%=cryptoData.name%></td>
+            </tr>
+            <tr>
+              <td>Supply</td>
+              <td class="data"><%=financial((cryptoData.supply),3)%></td>
+            </tr>
+            <tr>
+              <td>Max Supply</td>
+              <% if (cryptoData.maxSupply === null) { %>
+               <td style="color: #F44336; font-weight: 500;">N/A</td>
+              <% } else { %>
+              <td class="data"><%=financial((cryptoData.maxSupply),3)%></td>
+              <% } %>
+            </tr>
+            <tr>
+              <td>Market Cap</td>
+              <td class="data">$<%=financial((cryptoData.marketCapUsd),3)%></td>
+            </tr>
+            <tr>
+              <td>Volume (24hrs)</td>
+              <td class="data">$<%=financial((cryptoData.volumeUsd24Hr),3)%></td>
+            </tr>
+            <tr>
+              <td>VWAP (24hrs)</td>
+              <td class="data">$<%=financial((cryptoData.vwap24Hr),3)%></td>
+            </tr>
+            <tr>
+              <td>Value Change (%)</td>
+              <td class="data" id="dp%change"><%=financial((cryptoData.changePercent24Hr),3)%>%</td>
+            </tr>
+  
+            <tr>
+              <td>Price</td>
+              <td class="data">$<%=financial((cryptoData.priceUsd),3)%></td>
+            </tr>
+          </tbody>
+        </table>
+
+
+      
+
+          <p>The asset price is a volume-weighted average calculated by collecting ticker data from exchanges. Each exchange contributes to this price in relation to their volume, meaning higher volume exchanges have more affect on this global price. All values are translated into USD (United States Dollar) and can be translated into other units of measurement through the <a href="/conversion">conversion page</a>.</p>
+
+  </div>
+</div>
+
+<script>
+
+  // script to change the color of %change if positive or negative 
+
+  let element = document.getElementById("dp%change");
+
+      if ((element.innerText)[0] === "-") {
+        element.style.color = '#F44336';
+      } else {
+        element.style.color = '#1DC677';
+      }
+
+</script>
+
+
+<%- include("partials/footer") -%>

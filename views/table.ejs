@@ -1,0 +1,100 @@
+<%- include('partials/header') %>
+
+
+<style>
+    #container{
+        background-color: #0000;
+        padding: 80px;
+    }
+
+    #container h3{
+    background-color: #AFF8C8;
+    color: #014751;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow:  5px 5px 5px #01252b;
+    width: 500px;
+    margin: auto;
+    }
+
+    #cta h1{
+      color: black;
+    }
+
+    table{
+      /* box-shadow: 10px 10px 10px 5px #01252b; */
+      box-shadow: 0 0 6px 6px #012d35;
+    }
+
+    #table-header{
+      padding: 0px 0 50px 0;
+    }
+</style>
+
+
+<div id="container">
+
+<div id="table-header">
+  <h3>STATS & STANDINGS</h3>
+</div>
+
+<table class="table table-dark table-hover" style="font-size: 13px;">
+    <thead>
+      <tr class="table-active">
+        <th scope="col">Rank</th>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Market Cap</th>
+        <th scope="col">VWAP (24HR)</th>
+        <th scope="col">Supply</th>
+        <th scope="col">Volume (24HR)</th>
+        <th scope="col">Change (24HR)</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+
+
+        <% for( let i = 0; i < 20; i++ ) { %>
+        <%  function financial(x, num) { %>
+          <%  return (Number.parseFloat(x).toFixed(num)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); %>
+
+          
+          <% } %>
+            <tr>
+                <td scope="row"><%= cryptoData[i].rank %></td>
+                <td><img src="https://assets.coincap.io/assets/icons/<%= (cryptoData[i].symbol).toLowerCase() %>@2x.png" alt=" " style="width: 30px;">  <%= cryptoData[i].name %></td>
+                <td> $ <%= financial((cryptoData[i].priceUsd), 2) %></td>
+                <td> $ <%= financial((cryptoData[i].marketCapUsd),0 ) %></td>
+                <td> $ <%= financial((cryptoData[i].vwap24Hr), 2) %></td>
+                <td>  <%= financial((cryptoData[i].supply), 0) %></td>
+                <td> $ <%= financial((cryptoData[i].volumeUsd24Hr), 0) %></td>
+                <td class="%col"><%= financial((cryptoData[i].changePercent24Hr), 2) %> % </td>
+              </tr>
+        <% } %>
+
+
+    </tbody>
+  </table>
+  </div>
+
+  <script>
+
+    // script to change the color of %change if positive or negative 
+
+    let collection = document.getElementsByClassName("%col");
+
+      for (let i = 0; i < collection.length; i++) {
+        const element = collection[i];
+
+        if ((element.innerText)[0] === "-") {
+          element.style.color = '#F44336';
+        } else {
+          element.style.color = '#1DC677';
+        }
+        
+      }
+
+  </script>
+
+<%- include('partials/footer') %>

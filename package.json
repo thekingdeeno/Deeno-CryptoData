@@ -1,0 +1,22 @@
+{
+  "name": "crypto-api",
+  "version": "1.0.0",
+  "description": "My Cryptocurrency data website",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nwando Ifezue",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "ejs": "^3.1.9",
+    "exactnumber": "^1.0.1",
+    "express": "^4.18.2",
+    "lodash": "^4.17.21",
+    "node-fetch": "^2.6.11",
+    "number-shortener": "^1.0.1",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {}
+}
