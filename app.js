@@ -425,19 +425,19 @@ app.get("/table", function(req, res){
 
 
 
-app.listen(process.env.port, function(){
-    console.log("App running on port: " + process.env.port)
-})
+app.listen(process.env.PORT, function(){
+    console.log("App running on port: " + process.env.PORT)
+});
 
 // ngrok setup 
 
-async function startNgrok (){
-    const url = await ngrok.connect({
-        addr: process.env.PORT,
-        authtoken_from_env: true,
-    })
+// async function startNgrok (){
+//     const url = await ngrok.connect({
+//         addr: process.env.PORT,
+//         authtoken_from_env: true,
+//     })
 
-    console.log(`ingress established @ ${url}`)
-}
+//     console.log(`ingress established @ ${url}`)
+// }
 
 // startNgrok()
