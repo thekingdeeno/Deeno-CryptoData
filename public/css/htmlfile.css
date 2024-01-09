@@ -71,18 +71,18 @@ nav{
     padding: 80px 100px 75px 100px;
     background-color: #014751;
     color: aliceblue;
-    width: 100%;
     margin: 0%;
 
 }
 
 #span-text{
-    padding: 10px 50px 0px 0px;
+    /* padding: 10px 50px 0px 0px; */
     /* background-color: brown; */
+    text-align: center;
 }
 
 #span-text p{
-    padding: 10px 0 0px 0;
+    /* padding: 10px 0 0px 0; */
 }
 
 .white-btn{
@@ -90,7 +90,7 @@ nav{
 }
 
 #span-image{
-    padding: 0px 100px 0px 110px;
+    /* padding: 0px 100px 0px 110px; */
     /* background-color: blueviolet; */
     text-align: center;
 }
@@ -156,10 +156,6 @@ footer a:hover{
 
 
 
-
-
-
-
                 /* HTML Footer (not ejs) */
 
 
@@ -175,4 +171,49 @@ footer a:hover{
 
 #html-footer a:hover{
     color: #135964;
+}
+
+
+
+
+
+
+
+
+
+@media(max-width: 850px){
+
+    nav{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .navbar-brand{
+        padding-left: 20px;
+    }
+
+    #nav-signup{
+        padding-left: 10px;
+    }
+
+    .container-fluid{
+        padding: 0px;
+    }
+
+    #showcase{
+        padding: 20px;
+    }
+
+    #span-text{
+        padding: 15px;
+        background-color: #013138;
+        margin: 30px 0px;
+        border-radius: 10px;
+        box-shadow: 5px 5px 5px 5px #001f24;
+    }
+
+    #cta{
+        padding: 20px 15px;
+    }
 }

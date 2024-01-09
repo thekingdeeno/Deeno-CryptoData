@@ -202,10 +202,10 @@
     text-align: right;
   }
 
-  #answer{
-    /* background-color: #008da3;
-    padding: 0 0 0 50px; */
-  }
+  /* #answer{
+    background-color: #008da3;
+    padding: 0 0 0 50px;
+  } */
 
   #conv-footer-left h5{
     font-weight: 200;
@@ -254,6 +254,12 @@
     font-weight: 600;
     color:  #014751;
     padding: 0 10px 0 0;
+  }
+
+  @media(max-width: 950px){
+    #conv-page{
+      padding: 40px 0px 0px 0px;
+    }
   }
 
 </style>
@@ -320,6 +326,13 @@
              <% } else { %>
               <h5 style="padding-left: 20px;"><%= valueOne %> <a href="/datapage/<%= nameOne.toLowerCase() %>"><%= nameOne %>(<%= symOne %>)</a> equals</h5>
               <h1 style="padding-left: 20px;"><%= valueTwo %> <%= symTwo %></h1>
+              <% console.log(typeof(valueTwo)) %>
+
+              <% if (valueTwo === "NaN") { %>
+               <script>
+                alert('Sorry, Please these are the available currencies at the moment :- USD, EUR, CNY, CHF, AUD, PLN, TRY, CAD, JPY, GBP, NZD, KRW, DKK, HKD');
+               </script>
+              <% } %>
               <p style="padding-left: 20px;"><%= todaysDate %></p>
              <% } %>
           </div>

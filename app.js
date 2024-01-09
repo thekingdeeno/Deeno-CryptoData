@@ -1,3 +1,5 @@
+require("dotenv").config();
+const ngrok = require('ngrok');
 const express = require("express");
 const request = require("request");
 const bodyParser = require("body-parser");
@@ -119,7 +121,7 @@ app.post("/searchresults/" + param2 ,function(req, res){
         qs: {
             search: searchInput,
         }
-    }
+    };
 
     request(options, function(response, error, body){
         let searchResult = JSON.parse(body);
@@ -141,7 +143,7 @@ app.post("/searchresults/" + param2 ,function(req, res){
 
     });
 
-})
+});
 
 
 
@@ -342,7 +344,7 @@ app.get("/conversion", function(req, res){
 app.post("/conversion", (req, res)=>{
 
 
-    let crypto =  _.replace((req.body.crypto).toLowerCase(), " ", "-");;
+    let crypto =  _.replace((req.body.crypto).toLowerCase(), " ", "-");
     let fiat = req.body.fiat;
     let amount = req.body.amount;
 
@@ -366,6 +368,9 @@ app.post("/conversion", (req, res)=>{
         let newOptions = {
             url: "https://api.api-ninjas.com/v1/convertcurrency",
             method: "GET",
+            headers: {
+                'X-Api-Key': process.env.API_NINJA_KEY,
+            },
             qs: {
                 have:  "usd",
                 want:  fiat,
@@ -383,6 +388,8 @@ app.post("/conversion", (req, res)=>{
             newSymbol = fiat,
             newValue = answer,
 
+
+            console.log(body)
 
             res.redirect("/conversion");
 
@@ -403,13 +410,13 @@ app.get("/table", function(req, res){
     let url = "https://api.coincap.io/v2/assets"
 
     request(url, function(response, error, body){
-        let data = (JSON.parse(body)).data; 
+        let data = (JSON.parse(body)).data;
 
         res.render("table", {
             exNum : exNum,
             shortNum : shortNum,
             cryptoData : data,
-        })
+        });
 
         
     });
@@ -418,9 +425,19 @@ app.get("/table", function(req, res){
 
 
 
-const port = 3000 || process.env.port
-
-app.listen(port, function(){
-    console.log("App running on port:" + port)
+app.listen(process.env.port, function(){
+    console.log("App running on port: " + process.env.port)
 })
 
+// ngrok setup 
+
+async function startNgrok (){
+    const url = await ngrok.connect({
+        addr: process.env.PORT,
+        authtoken_from_env: true,
+    })
+
+    console.log(`ingress established @ ${url}`)
+}
+
+startNgrok()
