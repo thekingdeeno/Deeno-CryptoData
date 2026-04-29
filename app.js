@@ -24,7 +24,7 @@ app.use(express.static("public"));
 
 // const fetch = require("node-fetch")
 
-// fetch("https://api.coincap.io/v2/assets/ethereum")
+// fetch("${process.env.COINCAP_BASE_URL}/assets/ethereum")
 // .then(res => res.text())
 // .then(text => console.log(text.data));
 
@@ -41,10 +41,9 @@ app.get("/", function(req, res){
 
 app.get("/home", function(req, res){
 
-    const Url = "https://api.coincap.io/v2/assets";
+    const Url = `${process.env.COINCAP_BASE_URL}/assets`;
     
     request(Url, function(response, error, body){
-
         if (body === undefined) {
             res.redirect("/")
         };
@@ -116,7 +115,7 @@ app.post("/searchresults/" + param2 ,function(req, res){
     // }
 
     let options = {
-        url: "https://api.coincap.io/v2/assets",
+        url: `${process.env.COINCAP_BASE_URL}/assets`,
         method: "GET",
         qs: {
             search: searchInput,
@@ -161,7 +160,7 @@ app.get("/searchresults/:searchParam", function(req, res){
     }
 
     let options = {
-        url: "https://api.coincap.io/v2/assets",
+        url: `${process.env.COINCAP_BASE_URL}/assets`,
         method: "GET",
         qs: {
             search: searchInput,
@@ -224,7 +223,7 @@ app.get("/datapage/:searchParam", function(req, res){
 
     let searchUrl = req.params.searchParam;
 
-    const url = "https://api.coincap.io/v2/assets/" + _.replace(searchUrl, " ", "-");
+    const url = `${process.env.COINCAP_BASE_URL}/assets/${_.replace(searchUrl, " ", "-")}`;
 
     request(url, function(response, error, body){
 
@@ -290,7 +289,7 @@ app.get("/conversion", function(req, res){
         let list = Object.keys(JSON.parse(body));
 
 
-        request("https://api.coincap.io/v2/assets", function(response, error, body){
+        request(`${process.env.COINCAP_BASE_URL}/assets`, function(response, error, body){
 
         // to get array of all crypto symbols
         let allCrypto = (JSON.parse(body)).data;
@@ -349,7 +348,7 @@ app.post("/conversion", (req, res)=>{
     let amount = req.body.amount;
 
     let options = {
-        url: "https://api.coincap.io/v2/assets",
+        url: `${process.env.COINCAP_BASE_URL}/assets`,
         method: "GET",
         qs: {
             search: crypto,
@@ -364,22 +363,15 @@ app.post("/conversion", (req, res)=>{
 
         let cryptoToUsd = amount*usdPrice;
 
-
         let newOptions = {
-            url: "https://api.api-ninjas.com/v1/convertcurrency",
+            url: `${process.env.EXCHANGE_RATE_BASE_URL}/${process.env.EXCHANGE_RATE_API_KEY}/pair/USD/${fiat}/${cryptoToUsd}`,
             method: "GET",
-            headers: {
-                'X-Api-Key': process.env.API_NINJA_KEY,
-            },
-            qs: {
-                have:  "usd",
-                want:  fiat,
-                amount:  cryptoToUsd,
-            }
         }
     
         request(newOptions, function(response, error, body){
-            let answer = (JSON.parse(body)).new_amount;
+            const convResponse = JSON.parse(body);
+            let answer = convResponse.conversion_result;
+            
             let oldCurrency = (JSON.parse(body)).old_currency;
 
             baseSymbol = data.symbol,
@@ -387,9 +379,6 @@ app.post("/conversion", (req, res)=>{
             baseValue = amount,
             newSymbol = fiat,
             newValue = answer,
-
-
-            console.log(body)
 
             res.redirect("/conversion");
 
@@ -407,7 +396,7 @@ app.post("/conversion", (req, res)=>{
 app.get("/table", function(req, res){
 
 
-    let url = "https://api.coincap.io/v2/assets"
+    let url = `${process.env.COINCAP_BASE_URL}/assets`
 
     request(url, function(response, error, body){
         let data = (JSON.parse(body)).data;
