@@ -42,14 +42,21 @@ app.get("/", function(req, res){
 app.get("/home", function(req, res){
 
     const Url = `${process.env.COINCAP_BASE_URL}/assets`;
+
+    const options = {
+    url: Url,
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.COINCAP_API_KEY}`,
+    }
+};
     
-    request(Url, function(response, error, body){
+    request(options, function(response, error, body){
         if (body === undefined) {
             res.redirect("/")
         };
 
         let cryptoData = JSON.parse(body);
-
 
         let bitcoin = cryptoData.data[0];
         let ethereum = cryptoData.data[1];
@@ -342,7 +349,7 @@ app.get("/conversion", function(req, res){
 
 app.post("/conversion", (req, res)=>{
 
-
+    try {
     let crypto =  _.replace((req.body.crypto).toLowerCase(), " ", "-");
     let fiat = req.body.fiat;
     let amount = req.body.amount;
@@ -370,6 +377,8 @@ app.post("/conversion", (req, res)=>{
     
         request(newOptions, function(response, error, body){
             const convResponse = JSON.parse(body);
+            console.log({convResponse, response});
+            
             let answer = convResponse.conversion_result;
             
             let oldCurrency = (JSON.parse(body)).old_currency;
@@ -387,6 +396,9 @@ app.post("/conversion", (req, res)=>{
 
 
     });
+    } catch (error) {
+        console.error(error);
+    }
 
 })
 
