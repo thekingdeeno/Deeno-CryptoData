@@ -126,6 +126,10 @@ app.post("/searchresults/" + param2 ,function(req, res){
         method: "GET",
         qs: {
             search: searchInput,
+        },
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${process.env.COINCAP_API_KEY}`,
         }
     };
 
@@ -171,11 +175,18 @@ app.get("/searchresults/:searchParam", function(req, res){
         method: "GET",
         qs: {
             search: searchInput,
+        },
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${process.env.COINCAP_API_KEY}`,
         }
     }
 
     request(options, function(response, error, body){
         let searchResult = JSON.parse(body);
+
+        console.log(body);
+        
         let dataItems = searchResult.data;
 
         number = dataItems.length;
@@ -232,7 +243,16 @@ app.get("/datapage/:searchParam", function(req, res){
 
     const url = `${process.env.COINCAP_BASE_URL}/assets/${_.replace(searchUrl, " ", "-")}`;
 
-    request(url, function(response, error, body){
+        const options = {
+            url: Url,
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${process.env.COINCAP_API_KEY}`,
+            }
+        };
+
+    request(options, function(response, error, body){
 
         let searchResult = JSON.parse(body);
         let searchData = searchResult.data;
@@ -295,15 +315,21 @@ app.get("/conversion", function(req, res){
 
         let list = Object.keys(JSON.parse(body));
 
+        
+        const options = {
+            url: `${process.env.COINCAP_BASE_URL}/assets`,
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${process.env.COINCAP_API_KEY}`,
+            }
+        };
 
-        request(`${process.env.COINCAP_BASE_URL}/assets`, function(response, error, body){
+        request(options, function(response, error, body){
 
         // to get array of all crypto symbols
         let allCrypto = (JSON.parse(body)).data;
         // console.log(allCrypto);
-
-
-
 
 
 
@@ -359,6 +385,10 @@ app.post("/conversion", (req, res)=>{
         method: "GET",
         qs: {
             search: crypto,
+        },
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${process.env.COINCAP_API_KEY}`,
         }
     }
 
@@ -408,9 +438,16 @@ app.post("/conversion", (req, res)=>{
 app.get("/table", function(req, res){
 
 
-    let url = `${process.env.COINCAP_BASE_URL}/assets`
+    options = {
+        url: `${process.env.COINCAP_BASE_URL}/assets`,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${process.env.COINCAP_API_KEY}`,
+        }
+    }
 
-    request(url, function(response, error, body){
+    request(options, function(response, error, body){
         let data = (JSON.parse(body)).data;
 
         res.render("table", {
